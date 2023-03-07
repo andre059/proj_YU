@@ -1,19 +1,31 @@
 import os
 import json
-
-from googleapiclient.channel import Channel
 from googleapiclient.discovery import build
 
 
-# API_KEY скопирован из гугла и вставлен в переменные окружения
-api_key: str = os.getenv('API KEY')
+class Youtube:
+    def __init__(self, channel_id, api_key):
+        """
+        Получение API ключа и ID каналла
+        :param channel_id: ID каналла
+        :param api_key: API ключа
+        """
+        self.channel_id = channel_id
+        self.api_key: str = os.getenv(api_key)  # api ключь
+        self.youtube = None
+        self.channel = None
 
-# создать специальный объект для работы с API
-youtube = build('youtube', 'v3', developerKey=api_key)
+    def print_info(self):
+        """
+        Работа с данными каналла
+        :return:
+        """
+        self.youtube = build('youtube', 'v3', developerKey=self.api_key)  # специальный объект для работы с API
+        self.channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        return json.dumps(self.channel, indent=2, ensure_ascii=False)
 
-channel_id = 'UC1eFXmJNkjITxPFWTy6RsWg'
 
-channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
+item = Youtube('UC1eFXmJNkjITxPFWTy6RsWg', 'API KEY')
 
-print(json.dumps(channel, indent=2, ensure_ascii=False))
+print(item.print_info())
 

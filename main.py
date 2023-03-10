@@ -4,14 +4,14 @@ from googleapiclient.discovery import build
 
 
 class Youtube:
-    def __init__(self, channel_id, api_key):
+    def __init__(self, channel_id):
         """
         Получение API ключа и ID каналла
         :param channel_id: ID каналла
         :param api_key: API ключа
         """
         self.channel_id = channel_id
-        self.api_key: str = os.getenv(api_key)  # api ключь
+        self.api_key: str = os.getenv('API KEY')  # api ключь
         self.youtube = None
         self.channel = None
 
@@ -25,7 +25,7 @@ class Youtube:
         return json.dumps(self.channel, indent=2, ensure_ascii=False)
 
 
-item = Youtube('UC1eFXmJNkjITxPFWTy6RsWg', 'API KEY')
+item = Youtube('UC1eFXmJNkjITxPFWTy6RsWg')
 
 print(item.print_info())
 
